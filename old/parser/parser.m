@@ -2,6 +2,7 @@
 
 @interface Parser:NSObject{
     NSString *output;
+    Input *remainingInput;
 }
 - (Pair *) makeNot: (Pair *) pair;
 - (Pair *) makeAnd: (Pair *) pair;
