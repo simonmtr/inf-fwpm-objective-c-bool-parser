@@ -6,20 +6,20 @@
 
 ## structure
 1. introduction
- 1.1 What is functional programming?
- 1.2 Why is it relevant?
- 1.3 What are key concepts?
+ * What is functional programming?
+ * Why is it relevant?
+ * What are key concepts?
 2. golang functional programming
-  2.1 Key concepts of functional programming in GO
-  2.2 What tools to use functional programming
-  2.3 Example
+  * Key concepts of functional programming in GO
+  * What tools to use functional programming
+  * Example
 3. objective c functional programming
-  3.1 Key concepts of functional programming in OBJC
-  3.2 What tools to use functional programming
-  3.3 Example 
+  * Key concepts of functional programming in OBJC
+  * What tools to use functional programming
+  * Example 
 5. conclusion
-  5.1 Difference between GO and OBJC
-  5.2 GO or OBJC better for functional programming
+  * Difference between GO and OBJC
+  * GO or OBJC better for functional programming
 
 ## objc:
 * different types for functional programming in objc: https://stackoverflow.com/questions/943992/how-to-write-lambda-methods-in-objective-c
