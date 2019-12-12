@@ -1,7 +1,11 @@
 #import <Foundation/Foundation.h>
 
-    void (^hello)(void) = ^(void) {
-        printf("Hello, block!\n");
+    void (^end)(void) = ^(void) {
+        printf("Program end\n");
+    };
+
+        void (^start)(void) = ^(void) {
+        printf("Program start\n");
     };
 
 BOOL (^parseAND)(BOOL, BOOL)=^BOOL (BOOL a, BOOL b){
@@ -23,16 +27,26 @@ BOOL (^parseNot)(BOOL)=^BOOL (BOOL a){
 };
 
 BOOL parseBooleanExpression(){
-    
     parseNot(true);
     parseOR(true,true);
     parseAND(false,true);
     return true;
 }
 
+
+void eval(char *toEval){
+    while(*toEval){
+            
+
+        parseNot(true);
+        ++toEval;
+    }
+}
+
 int main (int argc, const char * argv[])
 {
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc]init];
+    start();
 
 /*     NodeOr *nodeAnd; 
     nodeAnd= [NodeOr alloc];
@@ -45,8 +59,8 @@ scanf("%s", stringToParse);                    // read and format into the str b
 printf("The string to parse is: %s\n", stringToParse);    // print buffer
 
     parseBooleanExpression();
-    hello();
-
+    eval(stringToParse);
+    end();
     [pool drain];
     return 0;
 }
