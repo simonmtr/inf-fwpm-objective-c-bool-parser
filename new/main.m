@@ -14,6 +14,10 @@ void doSomething(void (*something)(void)) {
     something();
 }
 
+    void (^simpleBlock)(void) = ^{
+        NSLog(@"This is a block");
+    };
+
 int main (int argc, const char * argv[])
 {
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc]init];
@@ -21,8 +25,11 @@ int main (int argc, const char * argv[])
 /*     NodeOr *nodeAnd; 
     nodeAnd= [NodeOr alloc];
     [nodeAnd Eval:nanl];
- */
+ */ 
     doSomething(sayHello);
+        simpleBlock();
+
+
 
     doSomething(sayBye);
 
