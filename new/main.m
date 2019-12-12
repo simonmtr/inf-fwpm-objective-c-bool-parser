@@ -26,12 +26,10 @@ int main (int argc, const char * argv[])
     nodeAnd= [NodeOr alloc];
     [nodeAnd Eval:nanl];
  */ 
-    doSomething(sayHello);
-        simpleBlock();
-
-
-
-    doSomething(sayBye);
+void (^hello)(void) = ^(void) {
+        printf("Hello, block!\n");
+    };
+    hello();
 
     [pool drain];
     return 0;
