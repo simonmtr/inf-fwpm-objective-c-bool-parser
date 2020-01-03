@@ -25,6 +25,7 @@ void (^start)(void) = ^(void) {
     @public id <Node> RHS;
 }
 - (BOOL) Eval:(NSMutableDictionary *) vars{
+    printf("did make nodeOr\n");
     return [LHS Eval:vars] || [RHS Eval:vars];
 }
 @end
@@ -60,22 +61,22 @@ void (^start)(void) = ^(void) {
 
 //---VAL---
 @interface NodeVal:NSObject <Node>{
-   @public char *name;
+   @public char name;
 }
 @end
 @implementation NodeVal {
-    @public char *name;
+    @public char name;
 }
 - (BOOL) Eval:(NSMutableDictionary *) vars{
     if(name == 0){
         return NO;
     }
-    printf("did evaluate - %s - with value = %d\n",name,[[vars objectForKey:[NSString stringWithFormat:@"%s", name]] boolValue]);
+    printf("did evaluate - %c - with value = %d\n",name,[[vars objectForKey:[NSString stringWithFormat:@"%c", name]] boolValue]);
     for(NSString *key in [vars allKeys]) {
         printf("%s\n",[key UTF8String]);
         NSLog(@"%@",[vars objectForKey:key]);
     }
-    return [[vars objectForKey:[NSString stringWithFormat:@"%s", name]] boolValue];
+    return [[vars objectForKey:[NSString stringWithFormat:@"%c", name]] boolValue];
 }
 @end
 
@@ -182,18 +183,30 @@ struct Parser * (^parseOr)(struct Parser*)=^struct Parser * (struct Parser *curr
         parseOr(currentParser);
     }
 
+    char *currentChar = currentParser->input;
+
+
     NodeVal *nodeVal;
     nodeVal = [NodeVal alloc];
-    nodeVal->name="a";
+    
+    printf("------------------------%c",currentChar[0]);    
+    printf("------------------------%c",currentChar[2]);
+
+    nodeVal->name=currentChar[0];
+
+    NodeVal *nodeVal2;
+    nodeVal2 = [NodeVal alloc];
+    nodeVal2->name=currentChar[2];
 
     NodeOr *nodeOr = currentParser->resultNode;
     nodeOr->RHS = nodeVal;
+    nodeOr->LHS = nodeVal2;
 
     //currentParser->resultNode->RHS = nodeVal;
     //currentParser->resultNode->LHS = nodeVal;
 
     BOOL evauatedBool =  [currentParser->resultNode Eval:currentParser->variables];
-    printf("EvaluatedBool = %d", evauatedBool);
+    printf("EvaluatedBool = %d\n", evauatedBool);
     return currentParser;
 };
 
@@ -206,7 +219,7 @@ int main (int argc, const char * argv[])
 
     //set the variables
     NSMutableDictionary *dict = [[NSMutableDictionary alloc]initWithCapacity:10]; //instantiate dictionary
-    [dict setValue:[NSNumber numberWithInt:true] forKey:@"a"]; //add something to dictionary
+    [dict setValue:[NSNumber numberWithInt:false] forKey:@"a"]; //add something to dictionary
     [dict setValue:[NSNumber numberWithInt:true] forKey:@"b"]; //add something to dictionary
     [dict setValue:[NSNumber numberWithInt:false] forKey:@"c"]; //add something to dictionary
 
