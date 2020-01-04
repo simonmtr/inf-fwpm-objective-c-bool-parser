@@ -4,6 +4,11 @@
 `clang $(gnustep-config --objc-flags) -o main main.m $(gnustep-config --base-libs) -fblocks -lBlocksRuntime`
 
 
+## Limitations
+- variables can be one char long
+- variables a with value 0, b with value 1 and c with value 0
+- no multiple "!" allowed
+
 ## structure
 1. introduction
  * What is functional programming?
