@@ -9,6 +9,8 @@
 - variables a with value 0, b with value 1 and c with value 0
 - no multiple "!" allowed
 
+
+
 ## structure
 1. introduction
  * What is functional programming?

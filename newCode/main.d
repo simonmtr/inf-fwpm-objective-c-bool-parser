@@ -143,7 +143,7 @@ main: main.m /usr/include/GNUstep/Foundation/Foundation.h \
   /usr/include/GNUstep/Foundation/NSXMLDTD.h \
   /usr/include/GNUstep/Foundation/NSXMLDTDNode.h \
   /usr/include/GNUstep/Foundation/NSXMLElement.h \
-  /usr/include/GNUstep/Foundation/NSXMLParser.h
+  /usr/include/GNUstep/Foundation/NSXMLParser.h node.m
 
 /usr/include/GNUstep/Foundation/Foundation.h:
 
@@ -436,3 +436,5 @@ main: main.m /usr/include/GNUstep/Foundation/Foundation.h \
 /usr/include/GNUstep/Foundation/NSXMLElement.h:
 
 /usr/include/GNUstep/Foundation/NSXMLParser.h:
+
+node.m:
