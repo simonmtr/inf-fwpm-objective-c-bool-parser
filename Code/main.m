@@ -2,6 +2,7 @@
 #include "node.m"
 #define MAXLENGTH (50)
 
+//parser struct
 struct Parser {
     char input[MAXLENGTH];
     int currentIndex;
@@ -9,19 +10,17 @@ struct Parser {
     NodeGeneric *resultNode;
 };
 
-
-
 //EXPECT CHAR
 BOOL (^expectChar)(struct Parser*,char *)=^BOOL (struct Parser *currentParser,char *charToCheck){
     char *currentChar = currentParser->input;
     int currentIndex = currentParser->currentIndex;
 
+    //if the charToCheck is the currentChar of the input
     if(currentChar[currentIndex] == charToCheck[0]){
         return YES;
     }
     return NO;
 };
-
 
 //VARIABLE
 struct Parser * (^parseVariable)(struct Parser*,int)=^struct Parser * (struct Parser *currentParser,int andOr){
@@ -30,17 +29,18 @@ struct Parser * (^parseVariable)(struct Parser*,int)=^struct Parser * (struct Pa
     int currentIndex = currentParser->currentIndex;
     char *specialChar="_";
 
+    //if the currentChar is a digit, a letter or "_"
     if(isalpha(currentChar[currentIndex])||isdigit(currentChar[currentIndex])||currentChar[currentIndex]==specialChar[0]){
+        //create node for variable
         NodeVal *nodeVal;
         nodeVal = [NodeVal alloc];
         nodeVal->name = currentChar[currentIndex];
 
-        // parent node is GENERIC node
+        // distinguish the parent Node
         if(andOr==4){
             currentParser->resultNode->LHS = nodeVal;
         }
 
-        // parent node is ANDnode
         if(andOr==1){
             id nodeAndId = currentParser->resultNode->LHS;
             NodeAnd *currentNodeAnd = nodeAndId;
@@ -48,7 +48,6 @@ struct Parser * (^parseVariable)(struct Parser*,int)=^struct Parser * (struct Pa
             currentParser->resultNode->LHS = currentNodeAnd;
         }
 
-        // parent node is OR node
         if(andOr==2){
             id nodeOrId = currentParser->resultNode->LHS;
             NodeOr *currentNodeOr = nodeOrId;
@@ -56,7 +55,6 @@ struct Parser * (^parseVariable)(struct Parser*,int)=^struct Parser * (struct Pa
             currentParser->resultNode->LHS = currentNodeOr;
         }
 
-        // parent node is NOT node
         if(andOr==3){
             printf("test\n");   
             id nodeNotId = currentParser->resultNode->LHS;
@@ -73,11 +71,13 @@ struct Parser * (^parseVariable)(struct Parser*,int)=^struct Parser * (struct Pa
 //NOT
 struct  Parser * (^parseNot)(struct Parser*,int)=^struct Parser * (struct Parser *currentParser,int andOr){
 
+    //if the current char is a "!"
     if(expectChar(currentParser,"!")){
-
+        //create nodeNot 
         NodeNot *nodeNot;
         nodeNot = [NodeNot alloc];
-
+        
+        // distinguish the parent Node
         if(andOr==1){
             id nodeAndId = currentParser->resultNode->LHS;
             NodeAnd *currentNodeAnd = nodeAndId;
@@ -106,7 +106,6 @@ struct  Parser * (^parseNot)(struct Parser*,int)=^struct Parser * (struct Parser
 struct Parser * (^parseAnd)(struct Parser*)=^struct Parser * (struct Parser *currentParser){
 
     if(expectChar(currentParser,"&")){
-
 
         NodeAnd *nodeAnd;
         nodeAnd = [NodeAnd alloc];
