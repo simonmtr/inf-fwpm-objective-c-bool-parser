@@ -7,9 +7,6 @@ struct Parser {
     int currentIndex;
     NSMutableDictionary *variables;
     NodeGeneric *resultNode;
-    id <Node> *currentNode;
-    id <Node> *currentParent;
-    BOOL result;
 };
 
 
@@ -18,7 +15,6 @@ struct Parser {
 BOOL (^expectChar)(struct Parser*,char *)=^BOOL (struct Parser *currentParser,char *charToCheck){
     char *currentChar = currentParser->input;
     int currentIndex = currentParser->currentIndex;
-
 
     if(currentChar[currentIndex] == charToCheck[0]){
         return YES;
@@ -35,24 +31,24 @@ struct Parser * (^parseVariable)(struct Parser*,int)=^struct Parser * (struct Pa
     char *specialChar="_";
 
     if(isalpha(currentChar[currentIndex])||isdigit(currentChar[currentIndex])||currentChar[currentIndex]==specialChar[0]){
-        
-        currentParser->currentIndex +=1;
-
         NodeVal *nodeVal;
         nodeVal = [NodeVal alloc];
         nodeVal->name = currentChar[currentIndex];
-        id nodeValId = currentParser->resultNode->LHS;
-        
+
+        // parent node is GENERIC node
         if(andOr==4){
             currentParser->resultNode->LHS = nodeVal;
         }
 
+        // parent node is ANDnode
         if(andOr==1){
             id nodeAndId = currentParser->resultNode->LHS;
             NodeAnd *currentNodeAnd = nodeAndId;
             currentNodeAnd->RHS = nodeVal;
             currentParser->resultNode->LHS = currentNodeAnd;
         }
+
+        // parent node is OR node
         if(andOr==2){
             id nodeOrId = currentParser->resultNode->LHS;
             NodeOr *currentNodeOr = nodeOrId;
@@ -60,16 +56,17 @@ struct Parser * (^parseVariable)(struct Parser*,int)=^struct Parser * (struct Pa
             currentParser->resultNode->LHS = currentNodeOr;
         }
 
+        // parent node is NOT node
         if(andOr==3){
-            id nodeValId = currentParser->resultNode->LHS;
-            NodeNot *currentNodeNot= nodeValId;
+            printf("test\n");   
+            id nodeNotId = currentParser->resultNode->LHS;
+            printf("currentChar: %c",currentChar[currentIndex]);
+            NodeNot *currentNodeNot= nodeNotId;
             currentNodeNot->Ex = nodeVal;
             currentParser->resultNode->LHS = currentNodeNot;
         }
-
-        currentParser->currentNode = &nodeValId;
-        return currentParser;
     }
+    currentParser->currentIndex +=1; //increase index for reading input
     return currentParser;
 };
 
@@ -80,8 +77,6 @@ struct  Parser * (^parseNot)(struct Parser*,int)=^struct Parser * (struct Parser
 
         NodeNot *nodeNot;
         nodeNot = [NodeNot alloc];
-
-        currentParser->currentNode = &(nodeNot->Ex);
 
         if(andOr==1){
             id nodeAndId = currentParser->resultNode->LHS;
@@ -96,11 +91,11 @@ struct  Parser * (^parseNot)(struct Parser*,int)=^struct Parser * (struct Parser
             currentNodeOr->RHS = nodeNot;
         }
 
-        if(andOr==0){
+        if(andOr==4){
+            printf("test123\n");
             currentParser->resultNode->LHS = nodeNot;
         }
         currentParser->currentIndex +=1; //increase index for reading input
-
 
         return parseVariable(currentParser,3);
     }
@@ -112,13 +107,13 @@ struct Parser * (^parseAnd)(struct Parser*)=^struct Parser * (struct Parser *cur
 
     if(expectChar(currentParser,"&")){
 
-        currentParser->currentIndex +=1;
 
         NodeAnd *nodeAnd;
         nodeAnd = [NodeAnd alloc];
         nodeAnd->LHS = currentParser->resultNode->LHS;
         currentParser->resultNode->LHS = nodeAnd;
-
+    
+        currentParser->currentIndex +=1; //increase index for reading input
         return parseNot(currentParser,1);
     }
 
@@ -130,13 +125,12 @@ struct Parser * (^parseOr)(struct Parser*)=^struct Parser * (struct Parser *curr
 
     if(expectChar(currentParser,"|")){
 
-        currentParser->currentIndex+=1;
-
         NodeOr *nodeOr;
         nodeOr = [NodeOr alloc];
         nodeOr->LHS = currentParser->resultNode->LHS;
         currentParser->resultNode->LHS = nodeOr;
     
+        currentParser->currentIndex +=1; //increase index for reading input
         return parseOr(parseAnd(parseNot(currentParser,2)));
     }
 
@@ -166,13 +160,12 @@ void (^runTests)(void) = ^(void) {
     nodeGeneric=[NodeGeneric alloc];
     //set node values
     myParser->resultNode = nodeGeneric;
-    myParser->currentNode = &(nodeGeneric->LHS);
 
     //test 1
-
     char *testInput = "a&b";
     strcpy(myParser->input,testInput);
-    parseNot(myParser,0);
+    parseAnd(parseNot(myParser,4));
+
     BOOL evaluatedBool = [nodeGeneric Eval:dict];
 
     if(evaluatedBool==0){
@@ -182,7 +175,7 @@ void (^runTests)(void) = ^(void) {
     //test 2
     char *test2Input = "a|b";
     strcpy(myParser->input,test2Input);
-    parseNot(myParser,0);
+    parseOr(parseAnd(parseNot(myParser,4)));
     BOOL evaluatedBool2 = [nodeGeneric Eval:dict];
 
     if(evaluatedBool2==0){
@@ -192,11 +185,21 @@ void (^runTests)(void) = ^(void) {
     //test 3
     char *test3Input = "!a|b";
     strcpy(myParser->input,test3Input);
-    parseNot(myParser,0);
+    parseOr(parseAnd(parseNot(myParser,4)));
     BOOL evaluatedBool3 = [nodeGeneric Eval:dict];
 
     if(evaluatedBool3==0){
         printf("Test 3 successful.\n");
+    }
+
+    //test 4
+    char *test4Input = "!a";
+    strcpy(myParser->input,test4Input);
+    parseNot(myParser,4);
+    BOOL evaluatedBool4 = [nodeGeneric Eval:dict];
+
+    if(evaluatedBool4==0){
+        printf("Test 4 successful.\n");
     }
 
 };
@@ -231,7 +234,6 @@ int main (int argc, const char * argv[])
     
     //set node values
     myParser->resultNode = nodeGeneric;
-    myParser->currentNode = &(nodeGeneric->LHS);
 
     // run parser
     myParser = parseOr(parseAnd(parseNot(myParser,4)));
