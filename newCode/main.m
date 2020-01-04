@@ -13,6 +13,20 @@ void (^start)(void) = ^(void) {
 - (BOOL) Eval:(NSMutableDictionary *) vars;
 @end
 
+//---GENERIC---
+@interface NodeGeneric:NSObject <Node>{
+    @public id <Node> ToEvaluate;
+}
+@end
+@implementation NodeGeneric {
+    @public id <Node> ToEvaluate;
+}
+- (BOOL) Eval:(NSMutableDictionary *) vars{
+    return [ToEvaluate Eval:vars];
+}
+@end 
+
+
 //---OR---
 @interface NodeOr:NSObject <Node>{
     @public id <Node> LHS;
@@ -81,15 +95,11 @@ void (^start)(void) = ^(void) {
 @end
 
 
-
-
-
-
 struct Parser {
     char input[MAXLENGTH];
     int currentIndex;
     NSMutableDictionary *variables;
-    NodeOr *resultNode;
+    id <Node> *resultNode;
     id <Node> currentNode;
     BOOL result;
 };
@@ -116,7 +126,7 @@ BOOL (^expectChar)(struct Parser*,char *)=^BOOL (struct Parser *currentParser,ch
 //VARIABLE
 //id = 05
 struct Parser * (^parseVariable)(struct Parser*)=^struct Parser * (struct Parser *currentParser){
-    printf("---starting 05---\n");
+    printf("---starting VAR---\n");
 
     char *currentChar = currentParser->input;
     int currentIndex = currentParser->currentIndex;
@@ -124,17 +134,19 @@ struct Parser * (^parseVariable)(struct Parser*)=^struct Parser * (struct Parser
     char *specialChar="_";
 
     if(isalpha(currentChar[currentIndex])||isdigit(currentChar[currentIndex])||currentChar[currentIndex]==specialChar[0]){
+        //IF it is VAR --> create NodeVal --> set currentNode to NodeVal
         printf("05 true->variable=%c\n",currentChar[currentIndex]);
         currentParser->currentIndex +=1;
-       // currentParser->currentNode=currentParser->currentNode->RHS;
+
+        id nodeValId = currentParser->currentNode;
+        nodeValId=[NodeVal alloc];
+        NodeVal *nodeVal2 = nodeValId;
+        nodeVal2->name = currentChar[currentIndex];
+
         printf("05 parser index = %i\n",currentParser->currentIndex);
 
-//only recognizes variables that have length 1
-        NSMutableDictionary *dict = currentParser->variables;
-        BOOL valueOfVariable = [[dict objectForKey:[NSString stringWithFormat:@"%c", currentChar[currentIndex]]] boolValue]; // get value 
-        printf("05 valueOfVariable: %d \n",valueOfVariable);
-        
-        return parseVariable(currentParser);
+        //return parseVariable(currentParser); //TODO if want to support longer variables
+        return currentParser;
     }
     printf("05 false->no variable=%c\n",currentChar[currentIndex]);
     return currentParser;
@@ -143,11 +155,21 @@ struct Parser * (^parseVariable)(struct Parser*)=^struct Parser * (struct Parser
 //NOT
 //id = 03
 struct  Parser * (^parseNot)(struct Parser*)=^struct Parser * (struct Parser *currentParser){
-    printf("---starting 03---\n");
+    printf("---starting NOT---\n");
 
+
+    //IF ! and in the beginning -> LHS
+    
     if(expectChar(currentParser,"!")){
+
+        //IF it is NOT --> create NodeNot --> set currentNode to Ex of NodeNot
+
+        id nodeNotId = currentParser->currentNode; //get current node which is not allocated
+        nodeNotId=[NodeNot alloc]; //allocate node
+        NodeNot *nodeNot= nodeNotId;
+        currentParser->currentNode = nodeNot->Ex; //set current node to NOTNODE
         currentParser->currentIndex +=1;
-      //  currentParser->currentNode=currentParser->currentNode->RHS;
+
         return parseNot(currentParser);
     }
 
@@ -155,55 +177,65 @@ struct  Parser * (^parseNot)(struct Parser*)=^struct Parser * (struct Parser *cu
         parseOr(currentParser);
         expectChar(currentParser,")");
     }  */
- //   currentParser->currentNode=currentParser->currentNode->LHS;
+
     return parseVariable(currentParser);
  };
 
 //AND
 //id = 06
 struct Parser * (^parseAnd)(struct Parser*)=^struct Parser * (struct Parser *currentParser){
-    printf("---starting 06---\n");
+    printf("---starting AND---\n");
 
     if(expectChar(currentParser,"&")){
+        //IF it is AND --> create NodeAnd --> set current tree to LHS of NodeAnd --> set currentNode to RHS of NodeAnd 
         currentParser->currentIndex +=1;
-        return parseAnd(currentParser);
+        id nodeAndId = currentParser->currentNode;
+        nodeAndId=[NodeAnd alloc];
+        NodeAnd *nodeAnd = nodeAndId;
+        currentParser->currentNode = nodeAnd->RHS; // set currentnode to RHS
+
+        return parseNot(currentParser);
     }
-   // currentParser->currentNode = currentParser->currentNode->LHS;
-    return parseNot(currentParser);
+
+    return currentParser;
 };
 
 //OR
 //id = 07
 struct Parser * (^parseOr)(struct Parser*)=^struct Parser * (struct Parser *currentParser){
-    printf("---starting 07---\n");
+    printf("---starting OR---\n");
 
     if(expectChar(currentParser,"|")){
+//IF it is OR --> create NodeOr --> set current tree to LHS of NodeOR --> set currentNode to RHS of NodeOr 
+
         currentParser->currentIndex+=1;
-        //currentParser->currentNode=currentParser->resultNode->RHS;
-        parseOr(currentParser);
+        id nodeOrId= currentParser->currentNode;
+        nodeOrId=[NodeOr alloc];
+        NodeOr *nodeOr= nodeOrId;
+        currentParser->currentNode = nodeOr->RHS; // set currentnode to RHS
+
+        parseOr(parseAnd(parseNot(currentParser)));
     }
 
-    char *currentChar = currentParser->input;
 
+ //WORKS
+/*     char *currentChar = currentParser->input;
 
     NodeVal *nodeVal;
     nodeVal = [NodeVal alloc];
-    
-    printf("------------------------%c",currentChar[0]);    
-    printf("------------------------%c",currentChar[2]);
-
     nodeVal->name=currentChar[0];
 
     NodeVal *nodeVal2;
     nodeVal2 = [NodeVal alloc];
     nodeVal2->name=currentChar[2];
 
-    NodeOr *nodeOr = currentParser->resultNode;
-    nodeOr->RHS = nodeVal;
-    nodeOr->LHS = nodeVal2;
+    NodeNot *nodeNot;
+    nodeNot = [NodeNot alloc];
+    nodeNot->Ex=nodeVal;
 
-    //currentParser->resultNode->RHS = nodeVal;
-    //currentParser->resultNode->LHS = nodeVal;
+    NodeOr *nodeOr = currentParser->resultNode;
+    nodeOr->RHS = nodeNot;
+    nodeOr->LHS = nodeVal2;  */
 
     BOOL evauatedBool =  [currentParser->resultNode Eval:currentParser->variables];
     printf("EvaluatedBool = %d\n", evauatedBool);
@@ -235,7 +267,14 @@ int main (int argc, const char * argv[])
     strcpy((*myParser).input, inputToParse);
     (*myParser).currentIndex = 0;
     myParser->variables = dict;
-    myParser->resultNode=[NodeOr alloc];
+
+    
+    NodeGeneric *nodeGeneric;
+    nodeGeneric=[NodeGeneric alloc];
+    myParser->resutlNode = nodeGeneric;
+    myParser->currentNode = nodeGeneric;
+
+
 
     NSMutableDictionary *dic2 = myParser->variables;
 
@@ -248,6 +287,8 @@ int main (int argc, const char * argv[])
     printf("02 the string of the parser is: %s\n",myParser->input);
     
     parseOr(parseAnd(parseNot(myParser)));
+
+    //TODO rerun code from beginning
 
 printEnd();
 //-------------------------------------------------------------//
