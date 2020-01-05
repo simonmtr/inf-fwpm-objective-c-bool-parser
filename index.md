@@ -85,9 +85,60 @@ func main() {
 When the main function gets run, the 'value' gets set to the value of the result of 'Make'. The 'Make' will be run as soon as the value gets evaluated ('fm.Println(value())').
 
 ### Immutability
-
+The following mutable Object can be created and modified:
+```
+type Person struct {
+    Name           string
+    FavoriteColors []string
+}
+```
+To make this struct immutable, the variables have to be written in lower case.
+```
+type Person struct {
+    name           string
+    favoriteColors []string
+}
+```
+Code in this package can still access the properties, therefore they are still mutable. If getters and setters and wither is added, it is possible to control which properties are allowed to change:
+```
+func (p Person) WithName(name string) Person {
+    p.name = name
+    return p
+}
+func (p Person) Name() string {
+    return p.name
+}
+func (p Person) NumFavoriteColors() int {
+    return len(p.favoriteColors)
+}
+func (p Person) FavoriteColorAt(i int) string {
+    return p.favoriteColors[i]
+}
+func (p Person) WithFavoriteColorAt(i int, favoriteColor string) Person {
+    p.favoriteColors = append(p.favoriteColors[:i],
+        append([]string{favoriteColor}, p.favoriteColors[i+1:]...)...)
+    return p
+}
+```
+The withers create a new state, the getters return data and the setters mutate state. The functions receive no pointer to make sure that the structure is passed by  and returned by value [19].
 
 ### Recursion
+The following example shows the fibonacci sequence using recursion.
+```
+func fib(input int) int {
+	fn := make(map[int]int)
+	for i := 0; i <= input; i++ {
+		var fibonacci int
+		if i <= 2 {
+			fibonacci = 1
+		} else {
+			fibonacci = fn[i-1] + fn[i-2]
+		}
+		fn[i] = fibonacci
+	}
+	return fn[input]
+}
+```
 
 # 3. Objective C
 Objective C is the main programming language for writing software for OS X and iOS. Objective C is a superset of the C programming language and inherits many characeristic of C while also adding object-oriented capabilities and a dynamic runtime [8]. There are currently two versions of Objective C: 'modern' and 'legacy'. The modern version is Objective C 2.0 with the programming interface "Objective-C Runtime Reference" while the legacy version is described in the "Objective-C 1 Runtime Reference" [8].
@@ -146,7 +197,7 @@ This block does not take any arguments and does not return any arguments. Method
 ```
 The 'void(^)(double, double))' is the block that gets passed as a parameter in this case [9].
 
-## Alternative to blocks
+#### Alternative to blocks
 There alternative to using blocks for functional programming in Objective C. One alternative is using function pointers:
 ```
 void print() {
@@ -231,9 +282,31 @@ This allows you to implement an expression which operates like the if control st
 Lazy evaluation implemented by swizzling blocks isn’t the only possible implementation; you could do it with a class wrapping a block (at the cost of an extra allocation) or with a plethora of subclasses implementing every desired operation (at the cost of writing a plethora of subclasses implementing every desired operation).
 
 ### Immutability
+Objective C objects are mutable by default. The Foundation framework introduces classes, that have mutable and immutable variants, but the immutable classes are superclasses to the mutable subclasses. The following classes are mutable:
+  * NSMutableArray
+  * NSMutableDictionary
+  * NSMutableSet
+  * NSMutableIndexSet
+  * NSMutableCharacterSet
+  * NSMutableData
+  * NSMutableString
+  * NSMutableAttributedString
+  * NSMutableURLRequest [18].
 
 ### Recursion
-
+It is possible to do recursion with Objective C.
+```
+-(int)fib:(int)num{
+    if (num == 0) {
+        return 0;
+    }
+    if (num == 1) {
+        return 1;
+    }    
+    return [self fib:num - 1] + [self fib:num - 2];
+}
+```
+This example calculates the fibonacci sequence using recursion. 
 
 # 4 conclusion
 ## 4.1 Difference of Golang and Objective C
@@ -242,16 +315,7 @@ Lazy evaluation implemented by swizzling blocks isn’t the only possible implem
 Programming Language | Pure Functions | Closure | Lazy Evaluation | Immutability | Recursion
 --- | --- | --- |--- | --- | ---
 Go | yes | yes  | generally not, can be done | ? | yes
-Objective C | yes | yes | no, can be done | ? | yes
-
-
-*Still* | `renders` | **nicely**
-1 | 2 | 3
-
-| Programming Language   | Pure Functions   | Closure    | Lazy Evaluation    | Immutability    | Recursion    |
-| ------------- |:-------------:| -----:|
-| Go | yes | yes | to some extend, can be done | ? | yes |
-| Objective C | yes | yes | no, but can be done | ? | yes |
+Objective C | yes | yes | no, can be done | yes | yes
 
 ### Difference between GO and OBJC
 ## 4.2 Conclusion
@@ -272,17 +336,16 @@ Go and Objective C have pure functions and closures. Lazy Evaluation can also be
 [15] https://wiki.haskell.org/Haskell_in_industry
 [16] Watt, David A., "Programming Language Design Concepts", 2009
 
-
-
 [6] https://golang.org/
 [7] https://golang.org/doc/faq
 [10] https://blog.merovius.de/2015/07/17/lazy-evaluation-in-go.html
 [11] https://gobyexample.com/closures
-[17] https://dev.to/deepu105/7-easy-functional-programming-techniques-in-go-3idp
+[19] https://levelup.gitconnected.com/building-immutable-data-structures-in-go-56a1068c76b2?
 
 [8] https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html
 [9] https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/WorkingwithBlocks/WorkingwithBlocks.html
 [12] https://intersections.tumblr.com/post/6740207101/lazy-evaluation-in-objective-c
+[18] https://developer.apple.com/library/archive/documentation/General/Conceptual/CocoaEncyclopedia/ObjectMutability/ObjectMutability.html
 
 ## objc:
 * different types for functional programming in objc: https://stackoverflow.com/questions/943992/how-to-write-lambda-methods-in-objective-c
