@@ -37,6 +37,118 @@ The most simple form of a block is:
     NSLog(@"This is a block");
 }
 ```
+It is possible to invoke a block just like a function, once the block it is declared.
+```
+double (^multiplyTwoValues)(double, double) =
+                              ^(double firstValue, double secondValue) {
+                                  return firstValue * secondValue;
+                              };
+ 
+double result = multiplyTwoValues(2,4);
+NSLog(@"The result is %f", result);
+```
+In this example, the 'result' is of type 'double' and uses the output of the created block 'multiplyTwoValues'. The block of 'multiplyTwoValues' takes two 'double' as input and multiplies them.
+It is possible to pass blocks as arguments to methods and functions as shown in the following code snippet:
+```
+- (IBAction)fetchInformation:(id)sender {
+    [self showProgess];
+
+    XYZTask *task = ...
+ 
+    [task beginTaskWithCallbackBlock:^{
+        [self hideProgress];
+    }];
+}
+```
+The 'fetchInformation' method calls a method do show the progress, creates a task and then tells the task to start. The code inside the callback block gets executed, once the task is completed. The block makes it easy to read the code, because there is no need to trace through methods in order to find out what is going to happen.
+The 'beginTaskWithCallbackBloc' declaration is shown in the following code snippet:
+```
+- (void)beginTaskWithCallbackBlock:(void (^)(void))callbackBlock;
+```
+This block does not take any arguments and does not return any arguments. Method parameters that expect a block as variable are specified as followed:
+```
+- (void)doSomethingWithBlock:(void (^)(double, double))block {
+   ...
+    block(21.0, 2.0);
+}
+```
+The 'void(^)(double, double))' is the block that gets passed as a parameter in this case [9].
+
+
+There alternative to using blocks for functional programming in Objective C. One alternative is using function pointers:
+```
+void print() {
+    NSLog(@"Printed!");
+}
+
+void printTwice(void (*toDo)(void)) {
+    toDo();
+    toDo();
+}
+
+int main(void) {
+    printTwice(print);
+    return 0;
+}
+```
+In this example, the 'printTwice' method takes the 'print' method as parameter and then calls it twice.
+Another alternative is using the protocol pattern:
+```
+@protocol Command <NSObject>
+- (void) printSomething;
+@end
+
+@interface DoPrint : NSObject <Command> {
+}
+@end
+
+@implementation DoPrint
+- (void) printSomething {
+    NSLog(@"Printed!");    
+}
+@end
+
+void printTwice(id<Command> command) {
+    [command printSomething];
+    [command printSomething];
+}
+
+int main(void) {
+    DoPrint* doPrint = [[DoPrint alloc] init];
+    printTwice(doPrint);
+    [doPrint release];
+    return 0;
+}
+```
+In this example a protocol named 'Command' is created which requires to implement the 'printSomething' method. The 'DoPrint' uses the property and implements the 'printSomething' method. The 'printTwice' method takes one 'Command' as an input and runs the 'printSomething' method twice for the 'Command'.
+The last alternative is using 'selectors':
+```
+@interface DoPrint : NSObject {
+}
+- (void) printSomething;
+@end
+
+@implementation DoPrint
+- (void) printSomething {
+    NSLog(@"Printed!");    
+}
+@end
+
+void printTwice(id<NSObject> obj, SEL selector) {
+    [obj performSelector:selector];
+    [obj performSelector:selector];
+}
+
+int main(void) {
+    DoPrint* doPrint = [[DoPrint alloc] init];
+    printTwice(doPrint, @selector(printSomething));
+    [doPrint release];
+    return 0;
+}
+```
+When using selectors, the 'DoPrint' gets implemented with the 'printSomething' method. When calling the 'printTwice' method while giving the id of the object and the an selector for the 'printSomething' method, the 'printTwice' methode calls the correct method using 'perfomrSelector' on the given selector.
+It can be seen, that using blocks instead of function pointers, protocols or selectors, makes the code more readable and cleaner.
+
 ### Key concepts of functional programming in OBJC
 ### blocks...
 ## 3.2 Tools
