@@ -1,6 +1,6 @@
 # 1.Introduction
 
-* What is functional programming?<br>
+### What is functional programming?<br>
 Programming languages can be classified by their features by programming paradigms. Imperative, which is procedual and object-oriented, and declarative, which is functional and mathematical, languages are the most common programming paradigms. Functional programming is part of the declarative programming paradigm. The process of building software using the composation of pure functions and avoiding shared state, mutable data and side effects.<br>
 
 ## 1.1 Relevance
