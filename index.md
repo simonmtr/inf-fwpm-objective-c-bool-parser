@@ -240,7 +240,9 @@ Lazy evaluation implemented by swizzling blocks isn’t the only possible implem
 
 
 ProgrammingLanguage | PureFunctions | Closure | LazyEvaluation | Immutability | Recursion
---- | --- | ---
+--- | --- | --- |--- | --- | ---
+
+
 *Still* | `renders` | **nicely**
 1 | 2 | 3
 
