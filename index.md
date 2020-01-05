@@ -3,7 +3,7 @@
 
 ## Table of contents
 1. [Introduction](#1-Introduction)
-1.1 [Relevance](#1.1-Relevance)
+1.1 [Relevance](#1-1-Relevance)
 1.2 [Key Concepts](#1.2-Key-Concepts)
 
 # 1 Introduction
