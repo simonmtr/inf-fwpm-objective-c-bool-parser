@@ -239,7 +239,7 @@ Lazy evaluation implemented by swizzling blocks isn’t the only possible implem
 ## 4.1 Difference of Golang and Objective C
 
 
-Programming Language | Pure Functions | Closure | Lazy Evaluation | Immutability | Recursion
+ProgrammingLanguage | PureFunctions | Closure | LazyEvaluation | Immutability | Recursion
 --- | --- | ---
 *Still* | `renders` | **nicely**
 1 | 2 | 3
