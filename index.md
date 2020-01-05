@@ -5,12 +5,12 @@
 Programming languages can be classified by their features by programming paradigms. Imperative, which is procedual and object-oriented, and declarative, which is functional and mathematical, languages are the most common programming paradigms. Functional programming is part of the declarative programming paradigm. The process of building software using the composation of pure functions and avoiding shared state, mutable data and side effects.<br>
 
 ## 1.1 Relevance
-The functional programming language Erlang is widely used in the industry. Facebook, Whatsapp and many more companies use Erlang, with the biggest being Ericsson. Ericsson uses functional programming for writing software used in telecommunication systems [13]. Facebook uses Haskell and ML besides Erlang, which was used for building the Facebook Chat [14]. Haskell is another functional programming language that is widely used. On the Haskell website are many examples of the use of the programming language. The range of use is diverse with aerospace, commercial, finance, web startup and many more. AT&T, Deutsche Bank, Facebook, Google, and Intel are some of the companies that use Haskell [15].
+The functional programming language Erlang is widely used in the industry. Facebook, Whatsapp and many more companies use Erlang, with the biggest being Ericsson. Ericsson uses functional programming for writing software used in telecommunication systems [13]. Facebook uses Haskell and ML besides Erlang, which was used for building the Facebook Chat [14]. Haskell is another functional programming language that is widely used. On the Haskell website are many examples of the use of the programming language. The range of use is diverse with aerospace, commercial, finance, web startup and many more. AT&T, Deutsche Bank, Facebook, Google, and Intel are some of the companies that use Haskell [15].\
 The named examples show that functional programming is relevant and used in the industry.
 
 ## 1.2 Key Concepts
 Pure functions is one key concept of functional programming. The opposite of pure functions are impure functions. An impure action is for example manipulating a variable outside of the method. A pure function in contrast does take an input and produces an output. They do not rely on global state or variables outside of itself. They operate independently from the state outside of the function [1]. A pure function always produces the same output for the same input.
-The shared state of a function is any variable, object or memory that exists in shared scope [2]. Removing the shared state a layer reduces the complexity by focusing only on what is given and how to process it [3]. After removing the shared state, the result does not change when changing the order or timing of function calls.
+The shared state of a function is any variable, object or memory that exists in shared scope [2]. Removing the shared state a layer reduces the complexity by focusing only on what is given and how to process it [3]. After removing the shared state, the result does not change when changing the order or timing of function calls.\
 
 Closures, also called first-class and higher-order functions, are functions that can take functions as an argument or return functions as result.
 
@@ -26,14 +26,11 @@ There are many advantages and disadvantages of functional programming. The reada
 The Aim of this paper is to compare the functional programming of the programmin languages Go and Objective C.
 The key concepts of functional programming is explained in chapter 1.2. In chapter 2 the programming language Go will be presented and in chapter 3 the programming language Objective C. After the basics of the programming language are explained, it is checked if each of the key concepts of functional programming can be applied to the programming language. Chapter 4 draws a conclusion and summarizes the paper.
 
-
 # 2. Golang
 Golang, or short Go, is  an open source project that is being developend by a team at Google and the open source community [6]. Robert Griesemer, Rob Pike and Ken Thompson thought about a new language on September 21, 2007. This language became Go and a open source project on November 10,2009 [7]. The first release was in March 2012 with the version '1' and in september 2019 was the latest release with version '1.13' [6]. Go tries to reduce clutter and complexity by removing ancestors and header files [7].
-### golang functional programming
 
 ## 2.1 Basic concepts
-### Key concepts of functional programming in GO
-
+Go is a multi-paradigm language, which means it is imperative and declarative.
 ## Pure functions
 Pure functions are natively implemented in Go:
 ```
@@ -62,29 +59,30 @@ func main() {
 The 'sequence' in this example returns another function, defined in the body of 'sequence'. The value of 'i' will be updated every time 'sequence' is called. The effect of the closure 'sequence' can be seen after calling it a few times.
 
 ### Lazy Evaluation
-Lazy Evaluation is not directly implemented in Go, but it is possible to implement by using clojures and the sync package [10]:
+Go in general does strict evaluation, the opposite of lazy evaluation. For operands like '&&' and '||' it does lazy evaluation.
+Lazy evaluation is therefore not directly implemented in Go in general, but it is possible to implement by using clojures and the sync package [10]:
 ```
 type LazyInt func() int
 
 func Make(f func() int) LazyInt {
-    var v int
+    var intValue int
     var once sync.Once
     return func() int {
         once.Do(func() {
-            v = f()
-            f = nil // so that f can now be GC'ed
+            intValue = f()
+            f = nil
         })
-        return v
+        return intValue
     }
 }
 
 func main() {
-    n := Make(func() { return 23 }) // Or something more expensive…
-    fmt.Println(n())                // Calculates the 23
-    fmt.Println(n() + 42)           // Reuses the calculated value
+    value := Make(func() { return 23 }) // Or something more expensive…
+    fmt.Println(value())                // Calculates the 23
+    fmt.Println(value() + 42)           // Reuses the calculated value
 }
 ```
-//TODO explain code
+When the main function gets run, the 'value' gets set to the value of the result of 'Make'. The 'Make' will be run as soon as the value gets evaluated ('fm.Println(value())').
 
 ### Immutability
 
@@ -259,6 +257,7 @@ Go and Objective C have pure functions and closures. Lazy Evaluation can also be
 [7] https://golang.org/doc/faq
 [10] https://blog.merovius.de/2015/07/17/lazy-evaluation-in-go.html
 [11] https://gobyexample.com/closures
+[17] https://dev.to/deepu105/7-easy-functional-programming-techniques-in-go-3idp
 
 [8] https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html
 [9] https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/WorkingwithBlocks/WorkingwithBlocks.html
