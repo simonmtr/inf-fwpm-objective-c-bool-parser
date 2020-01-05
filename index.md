@@ -241,8 +241,9 @@ Lazy evaluation implemented by swizzling blocks isn’t the only possible implem
 
 Programming Language | Pure Functions | Closure | Lazy Evaluation | Immutability | Recursion
 --- | --- | --- |--- | --- | ---
---- | --- | --- |--- | --- | ---
---- | --- | --- |--- | --- | ---
+Go | yes | yes  | generally not, can be done | ? | yes
+Objective C | yes | yes | no, can be done | ? | yes
+
 
 *Still* | `renders` | **nicely**
 1 | 2 | 3
