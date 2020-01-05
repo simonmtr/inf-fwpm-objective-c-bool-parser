@@ -2,18 +2,36 @@
 ### Simon Treutlein
 
 ## Table of contents
-1. [Introduction](#1-Introduction)
-1.1 [Relevance](#1-1-Relevance)
-1.2 [Key Concepts](#1.2-Key-Concepts)
+1. [Introduction](#1-Introduction)\
+1.1 [Relevance](#Relevance)\
+1.2 [Key Concepts](#Key-Concepts)\
+1.3 [Structure](#Structure)\
+2 [Golang](#Golang)\
+2.1 [Basic Concepts](#Basic-concepts-of-go)\
+2.1.1 [Closures](#closures-in-go)\
+2.1.2 [Lazy Evaluation](#Lazy-evaluation-in-go)\
+2.1.3 [Immutability](#Immutability-in-go)\
+2.1.4 [Recursion](#Recursion-in-go)\
+2.2 [Conclusion of Go](#Conclusion-of-go)\
+3 [Objective C](#Objective-c)\
+3.1 [Basic Concepts](#Basic-concepts-of-objective-c)\
+3.1.1 [Closures](#closures-in-objective-c)\
+3.1.2 [Alternative to Blocks](#alternative-to-blocks)\
+3.1.3 [Lazy Evaluation](#Lazy-evaluation-in-objective-c)\
+3.1.4 [Immutability](#Immutability-in-objective-c)\
+3.1.5 [Recursion](#Recursion-in-objective-c)\
+3.2 [Conclusion of Objective C](#Conclusion-of-objective-c)\
+4 [Conclusion](#Conclusion)
+
 
 # 1 Introduction
 Programming languages can be classified by their features by programming paradigms. Imperative, which is procedual and object-oriented, and declarative, which is functional and mathematical, languages are the most common programming paradigms. Functional programming is part of the declarative programming paradigm. The process of building software using the composation of pure functions and avoiding shared state, mutable data and side effects.\
 
-## 1.1 Relevance
+## Relevance
 The functional programming language Erlang is widely used in the industry. Facebook, Whatsapp and many more companies use Erlang, with the biggest being Ericsson. Ericsson uses functional programming for writing software used in telecommunication systems [13]. Facebook uses Haskell and ML besides Erlang, which was used for building the Facebook Chat [14]. Haskell is another functional programming language that is widely used. On the Haskell website are many examples of the use of the programming language. The range of use is diverse with aerospace, commercial, finance, web startup and many more. AT&T, Deutsche Bank, Facebook, Google, and Intel are some of the companies that use Haskell [15].\
 The named examples show that functional programming is relevant and used in the industry.
 
-## 1.2 Key Concepts
+## Key Concepts
 Pure functions is one key concept of functional programming. The opposite of pure functions are impure functions. An impure action is for example manipulating a variable outside of the method. A pure function in contrast does take an input and produces an output. They do not rely on global state or variables outside of itself. They operate independently from the state outside of the function [1]. A pure function always produces the same output for the same input.
 The shared state of a function is any variable, object or memory that exists in shared scope [2]. Removing the shared state a layer reduces the complexity by focusing only on what is given and how to process it [3]. After removing the shared state, the result does not change when changing the order or timing of function calls.\
 Closures, also called first-class and higher-order functions, are functions that can take functions as an argument or return functions as result.\
@@ -22,18 +40,18 @@ Another conpect of functional programming is immutability. Immutable objects can
 Functional programming does not use loops, but recursion. Recursion is less error prone than loops, but more difficult to understand [4].\
 There are many advantages and disadvantages of functional programming. The readability of the code can be reduced when only using pure functions and the performance can be decreased because of immutability and recursion. Testing and debugging for functional programming is easier, because the pure functions do not produce changes but immutable values. Functions can be treaded as values and passed as parameters to functions, from which follows easier understandable code [5].
 
-## 1.3 Structure
+## Structure
 The Aim of this paper is to compare the functional programming of the programmin languages Go and Objective C.\
 The key concepts of functional programming is explained in chapter 1.2. In chapter 2 the programming language Go will be presented and in chapter 3 the programming language Objective C. After the basics of the programming language are explained, it is checked if each of the key concepts of functional programming can be applied to the programming language. Chapter 4 draws a conclusion and summarizes the paper.
 
-# 2 Golang
+# Golang
 Golang, or short Go, is  an open source project that is being developend by a team at Google and the open source community [6]. Robert Griesemer, Rob Pike and Ken Thompson thought about a new language on September 21, 2007. This language became Go and a open source project on November 10,2009 [7]. The first release was in March 2012 with the version '1' and in september 2019 was the latest release with version '1.13' [6]. Go tries to reduce clutter and complexity by removing ancestors and header files [7].
 
 
-## 2.1 Basic concepts
+## Basic concepts of Go
 Go is a multi-paradigm language, which means it is imperative and declarative.
 
-### Pure functions
+### Pure functions in Go
 Pure functions are natively implemented in Go:
 ```
 func sum(a, b int) int {
@@ -42,7 +60,7 @@ func sum(a, b int) int {
 ```
 This function gets an input and produces an output, where the output is always the same for the same input.
 
-### Closures
+### Closures in Go
 Go directly implements closures [11]:
 ```
 func sequence() func() int {
@@ -60,7 +78,7 @@ func main() {
 ```
 The 'sequence' in this example returns another function, defined in the body of 'sequence'. The value of 'i' will be updated every time 'sequence' is called. The effect of the closure 'sequence' can be seen after calling it a few times.
 
-### Lazy Evaluation
+### Lazy Evaluation in Go
 Go in general does strict evaluation, the opposite of lazy evaluation. For operands like '&&' and '||' it does lazy evaluation.
 Lazy evaluation is therefore not directly implemented in Go in general, but it is possible to implement by using clojures and the sync package [10]:
 ```
@@ -86,7 +104,7 @@ func main() {
 ```
 When the main function gets run, the 'value' gets set to the value of the result of 'Make'. The 'Make' will be run as soon as the value gets evaluated ('fm.Println(value())').
 
-### Immutability
+### Immutability in Go
 The following mutable Object can be created and modified:
 ```
 type Person struct {
@@ -124,7 +142,7 @@ func (p Person) WithFavoriteColorAt(i int, favoriteColor string) Person {
 ```
 The withers create a new state, the getters return data and the setters mutate state. The functions receive no pointer to make sure that the structure is passed by  and returned by value [19].
 
-### Recursion
+### Recursion in Go
 The following example shows the fibonacci sequence using recursion.
 ```
 func fib(input int) int {
@@ -141,22 +159,22 @@ func fib(input int) int {
 	return fn[input]
 }
 ```
-## 2.2 Conclusion
+## Conclusion of Go
 
 
-# 3 Objective C
+# Objective C
 Objective C is the main programming language for writing software for OS X and iOS. Objective C is a superset of the C programming language and inherits many characeristic of C while also adding object-oriented capabilities and a dynamic runtime [8]. There are currently two versions of Objective C: 'modern' and 'legacy'. The modern version is Objective C 2.0 with the programming interface "Objective-C Runtime Reference" while the legacy version is described in the "Objective-C 1 Runtime Reference" [8].
 
-## 3.1 Basics
-Even though Objective C is primarily object-oriented it is possible to do functional progamming. 
-### Pure functions
+## Basic Concepts of Objective C
+Even though Objective C is primarily object-oriented it is possible to do functional progamming.
+### Pure functions in Objective C
 Pure functions are natively implemented in Objective C:
 ```
 - (int) sum: (int) a: (int) b{
     return  a+b;
 ```
 
-### Closures
+### Closures in Objective C
 The use of 'blocks' allows to create distinct segements of code to be passed to methods or functions as if they were values [9].
 The most simple form of a block is: 
 ```
@@ -277,7 +295,7 @@ When using selectors, the 'DoPrint' gets implemented with the 'printSomething' m
 It can be seen, that using blocks instead of function pointers, protocols or selectors, makes the code more readable and cleaner.\
 Using blocks or alternatives allow to do closures with Objective C.
 
-### Lazy Evaluation
+### Lazy Evaluation  in Objective C
 Objective C has generally no native implementation of lazy evaluations, but Closures or anonymous functions can be used as solution. There is a difference between  evaluating variables as operands and expressions which produce variables as operands when using the boolean operator '&&':
 ```
 BOOL
@@ -299,7 +317,7 @@ With an closure it is possible to implement an expression that is like the if co
 The code in the blocks is not evaluated until the blocks are called [12].\
 An implementation for lazy evaluation in Objective C can be found in [12]. It uses a technique called isa-swizzling, which means changing the isa pointer on an live object to point to a subclass of the original class. The implemenation is rather large and would go beyond the scope for this paper. It is important to know that lazy evaluation is possible for Objective C.
 
-### Immutability
+### Immutability in Objective C
 Objective C objects are mutable by default. The Foundation framework introduces classes, that have mutable and immutable variants, but the immutable classes are superclasses to the mutable subclasses. The following classes are mutable [18]:
   * NSMutableArray
   * NSMutableDictionary
@@ -312,7 +330,7 @@ Objective C objects are mutable by default. The Foundation framework introduces 
   * NSMutableURLRequest
 
 
-### Recursion
+### Recursion in Objective C
 It is possible to do recursion with Objective C.
 ```
 -(int)fib:(int)num{### Difference between GO and OBJC
@@ -328,7 +346,9 @@ It is possible to do recursion with Objective C.
 ```
 This example calculates the fibonacci sequence using recursion. 
 
-# 4 Conclusion
+## Conclusion of Objective C
+
+# Conclusion
 
 Programming Language | Pure Functions | Closure | Lazy Evaluation | Immutability | Recursion
 --- | --- | --- |--- | --- | ---
