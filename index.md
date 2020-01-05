@@ -3,8 +3,8 @@
 
 ## Table of contents
 1. [Introduction](#1-Introduction)
-1.1 [Relevance](##1.1-Relevance)
-1.2 [Key Concepts](##1.2-Key-Concepts)
+1.1 [Relevance](#1.1-Relevance)
+1.2 [Key Concepts](#1.2-Key-Concepts)
 
 # 1 Introduction
 Programming languages can be classified by their features by programming paradigms. Imperative, which is procedual and object-oriented, and declarative, which is functional and mathematical, languages are the most common programming paradigms. Functional programming is part of the declarative programming paradigm. The process of building software using the composation of pure functions and avoiding shared state, mutable data and side effects.\
