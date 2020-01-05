@@ -2,29 +2,12 @@
 ### Simon Treutlein
 
 ## Table of contents
-1. [Introduction](#1-Introduction)\
-1.1 [Relevance](#Relevance)\
-1.2 [Key Concepts](#Key-Concepts)\
-1.3 [Structure](#Structure)\
-2 [Golang](#Golang)\
-2.1 [Basic Concepts](#Basic-concepts-of-go)\
-2.1.1 [Closures](#closures-in-go)\
-2.1.2 [Lazy Evaluation](#Lazy-evaluation-in-go)\
-2.1.3 [Immutability](#Immutability-in-go)\
-2.1.4 [Recursion](#Recursion-in-go)\
-2.2 [Conclusion of Go](#Conclusion-of-go)\
-3 [Objective C](#Objective-c)\
-3.1 [Basic Concepts](#Basic-concepts-of-objective-c)\
-3.1.1 [Closures](#closures-in-objective-c)\
-3.1.2 [Alternative to Blocks](#alternative-to-blocks)\
-3.1.3 [Lazy Evaluation](#Lazy-evaluation-in-objective-c)\
-3.1.4 [Immutability](#Immutability-in-objective-c)\
-3.1.5 [Recursion](#Recursion-in-objective-c)\
-3.2 [Conclusion of Objective C](#Conclusion-of-objective-c)\
-4 [Conclusion](#Conclusion)
 
 
-# 1 Introduction
+:toc:
+
+
+# Introduction
 Programming languages can be classified by their features by programming paradigms. Imperative, which is procedual and object-oriented, and declarative, which is functional and mathematical, languages are the most common programming paradigms. Functional programming is part of the declarative programming paradigm. The process of building software using the composation of pure functions and avoiding shared state, mutable data and side effects.\
 
 ## Relevance
@@ -219,7 +202,7 @@ This block does not take any arguments and does not return any arguments. Method
 ```
 The 'void(^)(double, double))' is the block that gets passed as a parameter in this case [9].
 
-#### Alternative to blocks
+### Alternative to blocks
 There alternative to using blocks for functional programming in Objective C. One alternative is using function pointers:
 ```
 void print() {
