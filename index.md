@@ -1,8 +1,8 @@
 # Comparing functional programming of Go with Objective C
 ### Simon Treutlein
 
-# 1.Introduction
-Programming languages can be classified by their features by programming paradigms. Imperative, which is procedual and object-oriented, and declarative, which is functional and mathematical, languages are the most common programming paradigms. Functional programming is part of the declarative programming paradigm. The process of building software using the composation of pure functions and avoiding shared state, mutable data and side effects.<br>
+# 1 Introduction
+Programming languages can be classified by their features by programming paradigms. Imperative, which is procedual and object-oriented, and declarative, which is functional and mathematical, languages are the most common programming paradigms. Functional programming is part of the declarative programming paradigm. The process of building software using the composation of pure functions and avoiding shared state, mutable data and side effects.\
 
 ## 1.1 Relevance
 The functional programming language Erlang is widely used in the industry. Facebook, Whatsapp and many more companies use Erlang, with the biggest being Ericsson. Ericsson uses functional programming for writing software used in telecommunication systems [13]. Facebook uses Haskell and ML besides Erlang, which was used for building the Facebook Chat [14]. Haskell is another functional programming language that is widely used. On the Haskell website are many examples of the use of the programming language. The range of use is diverse with aerospace, commercial, finance, web startup and many more. AT&T, Deutsche Bank, Facebook, Google, and Intel are some of the companies that use Haskell [15].\
@@ -11,27 +11,23 @@ The named examples show that functional programming is relevant and used in the 
 ## 1.2 Key Concepts
 Pure functions is one key concept of functional programming. The opposite of pure functions are impure functions. An impure action is for example manipulating a variable outside of the method. A pure function in contrast does take an input and produces an output. They do not rely on global state or variables outside of itself. They operate independently from the state outside of the function [1]. A pure function always produces the same output for the same input.
 The shared state of a function is any variable, object or memory that exists in shared scope [2]. Removing the shared state a layer reduces the complexity by focusing only on what is given and how to process it [3]. After removing the shared state, the result does not change when changing the order or timing of function calls.\
-
-Closures, also called first-class and higher-order functions, are functions that can take functions as an argument or return functions as result.
-
-Lazy Evaluation, also called call-by-need, delays the evaluation of an expression until the value is needed [16].
-
+Closures, also called first-class and higher-order functions, are functions that can take functions as an argument or return functions as result.\
+Lazy Evaluation, also called call-by-need, delays the evaluation of an expression until the value is needed [16].\
 Another conpect of functional programming is immutability. Immutable objects can not be changed. A variable that has been initialized cannot be modified afterwards.
-
-Functional programming does not use loops, but recursion. Recursion is less error prone than loops, but more difficult to understand [4].
-
+Functional programming does not use loops, but recursion. Recursion is less error prone than loops, but more difficult to understand [4].\
 There are many advantages and disadvantages of functional programming. The readability of the code can be reduced when only using pure functions and the performance can be decreased because of immutability and recursion. Testing and debugging for functional programming is easier, because the pure functions do not produce changes but immutable values. Functions can be treaded as values and passed as parameters to functions, from which follows easier understandable code [5].
 
 ## 1.3 Structure
-The Aim of this paper is to compare the functional programming of the programmin languages Go and Objective C.
+The Aim of this paper is to compare the functional programming of the programmin languages Go and Objective C.\
 The key concepts of functional programming is explained in chapter 1.2. In chapter 2 the programming language Go will be presented and in chapter 3 the programming language Objective C. After the basics of the programming language are explained, it is checked if each of the key concepts of functional programming can be applied to the programming language. Chapter 4 draws a conclusion and summarizes the paper.
 
-# 2. Golang
+# 2 Golang
 Golang, or short Go, is  an open source project that is being developend by a team at Google and the open source community [6]. Robert Griesemer, Rob Pike and Ken Thompson thought about a new language on September 21, 2007. This language became Go and a open source project on November 10,2009 [7]. The first release was in March 2012 with the version '1' and in september 2019 was the latest release with version '1.13' [6]. Go tries to reduce clutter and complexity by removing ancestors and header files [7].
 
 ## 2.1 Basic concepts
 Go is a multi-paradigm language, which means it is imperative and declarative.
-## Pure functions
+
+### Pure functions
 Pure functions are natively implemented in Go:
 ```
 func sum(a, b int) int {
@@ -40,7 +36,7 @@ func sum(a, b int) int {
 ```
 This function gets an input and produces an output, where the output is always the same for the same input.
 
-## Closures
+### Closures
 Go directly implements closures [11]:
 ```
 func sequence() func() int {
@@ -140,7 +136,7 @@ func fib(input int) int {
 }
 ```
 
-# 3. Objective C
+# 3 Objective C
 Objective C is the main programming language for writing software for OS X and iOS. Objective C is a superset of the C programming language and inherits many characeristic of C while also adding object-oriented capabilities and a dynamic runtime [8]. There are currently two versions of Objective C: 'modern' and 'legacy'. The modern version is Objective C 2.0 with the programming interface "Objective-C Runtime Reference" while the legacy version is described in the "Objective-C 1 Runtime Reference" [8].
 
 ## 3.1 Basics
@@ -183,7 +179,7 @@ It is possible to pass blocks as arguments to methods and functions as shown in 
     }];
 }
 ```
-The 'fetchInformation' method calls a method do show the progress, creates a task and then tells the task to start. The code inside the callback block gets executed, once the task is completed. The block makes it easy to read the code, because there is no need to trace through methods in order to find out what is going to happen.
+The 'fetchInformation' method calls a method do show the progress, creates a task and then tells the task to start. The code inside the callback block gets executed, once the task is completed. The block makes it easy to read the code, because there is no need to trace through methods in order to find out what is going to happen.\
 The 'beginTaskWithCallbackBloc' declaration is shown in the following code snippet:
 ```
 - (void)beginTaskWithCallbackBlock:(void (^)(void))callbackBlock;
@@ -214,7 +210,7 @@ int main(void) {
     return 0;
 }
 ```
-In this example, the 'printTwice' method takes the 'print' method as parameter and then calls it twice.
+In this example, the 'printTwice' method takes the 'print' method as parameter and then calls it twice.\
 Another alternative is using the protocol pattern:
 ```
 @protocol Command <NSObject>
@@ -269,10 +265,9 @@ int main(void) {
     return 0;
 }
 ```
-When using selectors, the 'DoPrint' gets implemented with the 'printSomething' method. When calling the 'printTwice' method while giving the id of the object and the an selector for the 'printSomething' method, the 'printTwice' methode calls the correct method using 'perfomrSelector' on the given selector.
-It can be seen, that using blocks instead of function pointers, protocols or selectors, makes the code more readable and cleaner.
-
-Using blocks or alternatives allow to do functional programming with Objective C.
+When using selectors, the 'DoPrint' gets implemented with the 'printSomething' method. When calling the 'printTwice' method while giving the id of the object and the an selector for the 'printSomething' method, the 'printTwice' methode calls the correct method using 'perfomrSelector' on the given selector.\
+It can be seen, that using blocks instead of function pointers, protocols or selectors, makes the code more readable and cleaner.\
+Using blocks or alternatives allow to do closures with Objective C.
 
 ### Lazy Evaluation
 Objective C has no native implementation of lazy evaluations, Closures or anonymous functions can be used as solution.
@@ -296,7 +291,8 @@ Objective C objects are mutable by default. The Foundation framework introduces 
 ### Recursion
 It is possible to do recursion with Objective C.
 ```
--(int)fib:(int)num{
+-(int)fib:(int)num{### Difference between GO and OBJC
+
     if (num == 0) {
         return 0;
     }
@@ -317,14 +313,13 @@ Programming Language | Pure Functions | Closure | Lazy Evaluation | Immutability
 Go | yes | yes  | generally not, can be done | ? | yes
 Objective C | yes | yes | no, can be done | yes | yes
 
-### Difference between GO and OBJC
 ## 4.2 Conclusion
 This paper compares the functional programming of Go and Objective C. Different characterisits of functional programming were checked for Go and Objective C.
-It is possible to do functional programming with Objective C and with Go. 
+It is possible to do functional programming with Objective C and with Go.\
 Go and Objective C have pure functions and closures. Lazy Evaluation can also be implemented in Go and Objective C.
 
 
-### Literature
+# Literature
 
 [1] https://www.sitepoint.com/what-is-functional-programming/
 [2] https://medium.com/javascript-scene/master-the-javascript-interview-what-is-functional-programming-7f218c68b3a0
@@ -346,6 +341,10 @@ Go and Objective C have pure functions and closures. Lazy Evaluation can also be
 [9] https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/WorkingwithBlocks/WorkingwithBlocks.html
 [12] https://intersections.tumblr.com/post/6740207101/lazy-evaluation-in-objective-c
 [18] https://developer.apple.com/library/archive/documentation/General/Conceptual/CocoaEncyclopedia/ObjectMutability/ObjectMutability.html
+
+
+
+
 
 ## objc:
 * different types for functional programming in objc: https://stackoverflow.com/questions/943992/how-to-write-lambda-methods-in-objective-c
