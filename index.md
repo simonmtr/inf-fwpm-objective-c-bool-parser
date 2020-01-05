@@ -86,6 +86,9 @@ When the main function gets run, the 'value' gets set to the value of the result
 
 ### Immutability
 
+
+### Recursion
+
 # 3. Objective C
 Objective C is the main programming language for writing software for OS X and iOS. Objective C is a superset of the C programming language and inherits many characeristic of C while also adding object-oriented capabilities and a dynamic runtime [8]. There are currently two versions of Objective C: 'modern' and 'legacy'. The modern version is Objective C 2.0 with the programming interface "Objective-C Runtime Reference" while the legacy version is described in the "Objective-C 1 Runtime Reference" [8].
 
@@ -229,12 +232,22 @@ Lazy evaluation implemented by swizzling blocks isn’t the only possible implem
 
 ### Immutability
 
+### Recursion
+
 
 # 4 conclusion
 ## 4.1 Difference of Golang and Objective C
 
+
+
+| Programming Language        | Pure Functions | Closure  | Lazy Evaluation | Immutability | Recursion |
+| ------------- |:-------------:| -----:|
+| Go | yes | yes | to some extend, can be done | ? | yes |
+| Objective C | yes | yes | no, but can be done | ? | yes |
+
 ### Difference between GO and OBJC
 ## 4.2 Conclusion
+This paper compares the functional programming of Go and Objective C. Different characterisits of functional programming were checked for Go and Objective C.
 It is possible to do functional programming with Objective C and with Go. 
 Go and Objective C have pure functions and closures. Lazy Evaluation can also be implemented in Go and Objective C.
 
