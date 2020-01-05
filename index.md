@@ -32,9 +32,10 @@ Objective C is the main programming language for writing software for OS X and i
 ## 3.1 Basic concepts
 Even though Objective C is primarily object-oriented it is possible to do functional progamming. The use of 'blocks' allows to create distinct segements of code to be passed to methods or functions as if they were values [9].
 The most simple form of a block is: 
-```^{
-         NSLog(@"This is a block");
-    }
+```
+^{
+    NSLog(@"This is a block");
+}
 ```
 ### Key concepts of functional programming in OBJC
 ### blocks...
