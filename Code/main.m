@@ -56,9 +56,7 @@ struct Parser * (^parseVariable)(struct Parser*,int)=^struct Parser * (struct Pa
         }
 
         if(andOr==3){
-            printf("test\n");   
             id nodeNotId = currentParser->resultNode->LHS;
-            printf("currentChar: %c",currentChar[currentIndex]);
             NodeNot *currentNodeNot= nodeNotId;
             currentNodeNot->Ex = nodeVal;
             currentParser->resultNode->LHS = currentNodeNot;
@@ -92,7 +90,6 @@ struct  Parser * (^parseNot)(struct Parser*,int)=^struct Parser * (struct Parser
         }
 
         if(andOr==4){
-            printf("test123\n");
             currentParser->resultNode->LHS = nodeNot;
         }
         currentParser->currentIndex +=1; //increase index for reading input
@@ -119,7 +116,7 @@ struct Parser * (^parseAnd)(struct Parser*)=^struct Parser * (struct Parser *cur
     return currentParser;
 };
 
-//OR
+//ORhttps://www.sitepoint.com/what-is-functional-programming/
 struct Parser * (^parseOr)(struct Parser*)=^struct Parser * (struct Parser *currentParser){
 
     if(expectChar(currentParser,"|")){
