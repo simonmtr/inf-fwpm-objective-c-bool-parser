@@ -2,7 +2,7 @@
 ### Simon Treutlein
 
 ## Table of contents
-1. [Introduction](#-1-Introduction)
+1. [Introduction](#1-Introduction)
 
 
 # 1 Introduction
