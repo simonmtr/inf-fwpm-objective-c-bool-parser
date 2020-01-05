@@ -7,19 +7,19 @@
 1.2. [Key Concepts](#Key-Concepts)\
 1.3. [Structure](#Structure)
 2. [Golang](#Golang)\
-  2.1. [Basic Concepts](#Basic-concepts-of-go)\
-  2.1.1. [Closures](#closures-in-go)\
-  2.1.2. [Lazy Evaluation](#Lazy-evaluation-in-go)\
-  2.1.3. [Immutability](#Immutability-in-go)\
-  2.1.4. [Recursion](#Recursion-in-go)\
+2.1. [Basic Concepts](#Basic-concepts-of-go)\
+-> 2.1.1. [Closures](#closures-in-go)\
+-> 2.1.2. [Lazy Evaluation](#Lazy-evaluation-in-go)\
+-> 2.1.3. [Immutability](#Immutability-in-go)\
+-> 2.1.4. [Recursion](#Recursion-in-go)\
 2.2. [Conclusion of Go](#Conclusion-of-go)
 3. [Objective C](#Objective-c)\
 3.1. [Basic Concepts](#Basic-concepts-of-objective-c)\
-  3.1.1. [Closures](#closures-in-objective-c)\
-  3.1.2. [Alternative to Blocks](#alternative-to-blocks)\
-  3.1.3. [Lazy Evaluation](#Lazy-evaluation-in-objective-c)\
-  3.1.4. [Immutability](#Immutability-in-objective-c)\
-  3.1.5. [Recursion](#Recursion-in-objective-c)\
+-> 3.1.1. [Closures](#closures-in-objective-c)\
+-> 3.1.2. [Alternative to Blocks](#alternative-to-blocks)\
+-> 3.1.3. [Lazy Evaluation](#Lazy-evaluation-in-objective-c)\
+-> 3.1.4. [Immutability](#Immutability-in-objective-c)\
+-> 3.1.5. [Recursion](#Recursion-in-objective-c)\
 3.2. [Conclusion of Objective C](#Conclusion-of-objective-c)
 4. [Conclusion](#Conclusion)
 
