@@ -21,12 +21,15 @@
 
 # Introduction
 Programming languages can be classified by their features by programming paradigms. Imperative, which is procedual and object-oriented, and declarative, which is functional and mathematical, languages are the most common programming paradigms. Functional programming is part of the declarative programming paradigm. The process of building software using the composation of pure functions and avoiding shared state, mutable data and side effects.\
+The difference between imperative and declarative programming is amongst other things, that global state can affect the value of the function. The same expression can, depending on the state of the program, result in differnt value [19].
 
 ## Relevance
 The functional programming language Erlang is widely used in the industry. Facebook, Whatsapp and many more companies use Erlang, with the biggest being Ericsson. Ericsson uses functional programming for writing software used in telecommunication systems [1]. Facebook uses Haskell and ML besides Erlang, which was used for building the Facebook Chat [2]. Haskell is another functional programming language that is widely used. On the Haskell website are many examples of the use of the programming language. The range of use is diverse with aerospace, commercial, finance, web startup and many more. AT&T, Deutsche Bank, Facebook, Google, and Intel are some of the companies that use Haskell [3].\
 The named examples show that functional programming is relevant and used in the industry.
 
 ## Key Concepts
+Functional programming was invented to investigate problems like computability, function application and recursion. It has it origins in lambda calculus, a formal system in mathematical logic [19].\
+Examples for functional languages are Haskell, Erlang, F# and Lisp.\n
 Pure functions is one key concept of functional programming. The opposite of pure functions are impure functions. An impure action is for example manipulating a variable outside of the method. A pure function in contrast does take an input and produces an output. They do not rely on global state or variables outside of itself. They operate independently from the state outside of the function [4]. A pure function always produces the same output for the same input.
 The shared state of a function is any variable, object or memory that exists in shared scope [5]. Removing the shared state a layer reduces the complexity by focusing only on what is given and how to process it [6]. After removing the shared state, the result does not change when changing the order or timing of function calls.\
 Closures, also called first-class and higher-order functions, are functions that can take functions as an argument or return functions as result. With closures it is possible to do currying, a technique to translate the evaluation of a function that takes multiple arguments with a single argument for each into evaluation a sequence of functions.\
@@ -367,3 +370,4 @@ Lazy Evaluation is generally not native to Go or Objective C, but can be impleme
 [16] https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/WorkingwithBlocks/WorkingwithBlocks.html
 [17] https://intersections.tumblr.com/post/6740207101/lazy-evaluation-in-objective-c
 [18] https://developer.apple.com/library/archive/documentation/General/Conceptual/CocoaEncyclopedia/ObjectMutability/ObjectMutability.html
+[19] Hudak, Paul, "Conception, evolution and application of functional programming languages", 1989
