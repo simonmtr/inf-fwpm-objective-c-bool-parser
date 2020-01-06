@@ -10,11 +10,4 @@
 
 ## Limitations
 - variables can be one char long
-- variables a with value 0, b with value 1 and c with value 0
-- no multiple "!" allowed
-
-
-
-
-
-
+- variables a with value 0, b with value 1 and c with value 0 per default
