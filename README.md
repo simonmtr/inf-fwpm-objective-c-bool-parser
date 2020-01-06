@@ -11,3 +11,7 @@
 ## Limitations
 - variables can be one char long
 - variables a with value 0, b with value 1 and c with value 0 per default
+
+todo:
+functional programming in presentation / paper(?)
+add to stuff presentation
