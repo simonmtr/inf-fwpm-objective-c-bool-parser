@@ -15,3 +15,6 @@
 todo:
 functional programming in presentation / paper(?)
 add to stuff presentation
+
+mutable types objective c
+add stuff to readme
