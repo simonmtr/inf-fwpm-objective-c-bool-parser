@@ -12,8 +12,11 @@ struct Parser {
 
 //EXPECT CHAR
 BOOL (^expectChar)(struct Parser*,char *)=^BOOL (struct Parser *currentParser,char *charToCheck){
-    char *currentChar = currentParser->input;
-    int currentIndex = currentParser->currentIndex;
+    struct Parser *tempParser = (struct Parser*) malloc(sizeof(struct Parser)); //create parser be out of global state
+    tempParser = currentParser;
+    
+    char *currentChar = tempParser->input;
+    int currentIndex = tempParser->currentIndex;
 
     //if the charToCheck is the currentChar of the input
     if(currentChar[currentIndex] == charToCheck[0]){
@@ -24,6 +27,8 @@ BOOL (^expectChar)(struct Parser*,char *)=^BOOL (struct Parser *currentParser,ch
 
 //VARIABLE
 struct Parser * (^parseVariable)(struct Parser*,int)=^struct Parser * (struct Parser *currentParser,int andOr){
+    struct Parser *tempParser = (struct Parser*) malloc(sizeof(struct Parser)); //create parser be out of global state
+    tempParser = currentParser;
 
     char *currentChar = currentParser->input;
     int currentIndex = currentParser->currentIndex;
@@ -38,99 +43,107 @@ struct Parser * (^parseVariable)(struct Parser*,int)=^struct Parser * (struct Pa
 
         // distinguish the parent Node
         if(andOr==4){
-            currentParser->resultNode->LHS = nodeVal;
+            tempParser->resultNode->LHS = nodeVal;
         }
 
         if(andOr==1){
-            id nodeAndId = currentParser->resultNode->LHS;
+            id nodeAndId = tempParser->resultNode->LHS;
             NodeAnd *currentNodeAnd = nodeAndId;
             currentNodeAnd->RHS = nodeVal;
-            currentParser->resultNode->LHS = currentNodeAnd;
+            tempParser->resultNode->LHS = currentNodeAnd;
         }
 
         if(andOr==2){
-            id nodeOrId = currentParser->resultNode->LHS;
+            id nodeOrId = tempParser->resultNode->LHS;
             NodeOr *currentNodeOr = nodeOrId;
             currentNodeOr->RHS = nodeVal;
-            currentParser->resultNode->LHS = currentNodeOr;
+            tempParser->resultNode->LHS = currentNodeOr;
         }
 
         if(andOr==3){
-            id nodeNotId = currentParser->resultNode->LHS;
+            id nodeNotId = tempParser->resultNode->LHS;
             NodeNot *currentNodeNot= nodeNotId;
-            currentNodeNot->Ex = nodeVal;
-            currentParser->resultNode->LHS = currentNodeNot;
+            currentNodeNot->LHS = nodeVal;
+            tempParser->resultNode->LHS = currentNodeNot;
         }
     }
-    currentParser->currentIndex +=1; //increase index for reading input
-    return currentParser;
+    tempParser->currentIndex +=1; //increase index for reading input
+    return tempParser;
 };
 
 //NOT
 struct  Parser * (^parseNot)(struct Parser*,int)=^struct Parser * (struct Parser *currentParser,int andOr){
-
+    struct Parser *tempParser = (struct Parser*) malloc(sizeof(struct Parser)); //create parser be out of global state
+    tempParser = currentParser;
+    
     //if the current char is a "!"
-    if(expectChar(currentParser,"!")){
+    if(expectChar(tempParser,"!")){
         //create nodeNot 
         NodeNot *nodeNot;
         nodeNot = [NodeNot alloc];
         
         // distinguish the parent Node
         if(andOr==1){
-            id nodeAndId = currentParser->resultNode->LHS;
+            id nodeAndId = tempParser->resultNode->LHS;
             NodeAnd *currentNodeAnd = nodeAndId;
             currentNodeAnd->RHS = nodeNot;
-            currentParser->resultNode->LHS = currentNodeAnd;
+            tempParser->resultNode->LHS = currentNodeAnd;
         }
 
         if(andOr==2){
-            id nodeOrId = currentParser->resultNode->LHS;
+            id nodeOrId = tempParser->resultNode->LHS;
             NodeOr *currentNodeOr = nodeOrId;
             currentNodeOr->RHS = nodeNot;
+            tempParser->resultNode->LHS = currentNodeOr;
         }
 
+        //very first char is "!"
         if(andOr==4){
-            currentParser->resultNode->LHS = nodeNot;
+            tempParser->resultNode->LHS = nodeNot;
         }
-        currentParser->currentIndex +=1; //increase index for reading input
+        tempParser->currentIndex +=1; //increase index for reading input
 
-        return parseVariable(currentParser,3);
+        return parseVariable(tempParser,3);
     }
-    return parseVariable(currentParser,andOr);
+    return parseVariable(tempParser,andOr);
  };
 
 //AND
 struct Parser * (^parseAnd)(struct Parser*)=^struct Parser * (struct Parser *currentParser){
+    struct Parser *tempParser = (struct Parser*) malloc(sizeof(struct Parser)); //create parser be out of global state
+    tempParser = currentParser;
 
-    if(expectChar(currentParser,"&")){
+    if(expectChar(tempParser,"&")){
 
         NodeAnd *nodeAnd;
         nodeAnd = [NodeAnd alloc];
-        nodeAnd->LHS = currentParser->resultNode->LHS;
-        currentParser->resultNode->LHS = nodeAnd;
+        nodeAnd->LHS = tempParser->resultNode->LHS;
+        tempParser->resultNode->LHS = nodeAnd;
     
         currentParser->currentIndex +=1; //increase index for reading input
-        return parseNot(currentParser,1);
+        return parseNot(tempParser,1);
     }
 
-    return currentParser;
+    return tempParser;
 };
 
-//ORhttps://www.sitepoint.com/what-is-functional-programming/
+//OR
 struct Parser * (^parseOr)(struct Parser*)=^struct Parser * (struct Parser *currentParser){
+    struct Parser *tempParser = (struct Parser*) malloc(sizeof(struct Parser)); //create parser be out of global state
+    tempParser = currentParser;
 
     if(expectChar(currentParser,"|")){
 
         NodeOr *nodeOr;
         nodeOr = [NodeOr alloc];
-        nodeOr->LHS = currentParser->resultNode->LHS;
-        currentParser->resultNode->LHS = nodeOr;
+        nodeOr->LHS = tempParser->resultNode->LHS;
+        tempParser->resultNode->LHS = nodeOr;
     
-        currentParser->currentIndex +=1; //increase index for reading input
-        return parseOr(parseAnd(parseNot(currentParser,2)));
+        tempParser->currentIndex +=1; //increase index for reading input
+        return parseOr(parseAnd(parseNot(tempParser,2)));
     }
 
-    return currentParser;
+    return tempParser;
 };
 
 //start
@@ -161,9 +174,7 @@ void (^runTests)(void) = ^(void) {
     char *testInput = "a&b";
     strcpy(myParser->input,testInput);
     parseAnd(parseNot(myParser,4));
-
     BOOL evaluatedBool = [nodeGeneric Eval:dict];
-
     if(evaluatedBool==0){
         printf("Test 1 successful.\n");
     }
@@ -173,7 +184,6 @@ void (^runTests)(void) = ^(void) {
     strcpy(myParser->input,test2Input);
     parseOr(parseAnd(parseNot(myParser,4)));
     BOOL evaluatedBool2 = [nodeGeneric Eval:dict];
-
     if(evaluatedBool2==0){
         printf("Test 2 successful.\n");
     }
@@ -183,7 +193,6 @@ void (^runTests)(void) = ^(void) {
     strcpy(myParser->input,test3Input);
     parseOr(parseAnd(parseNot(myParser,4)));
     BOOL evaluatedBool3 = [nodeGeneric Eval:dict];
-
     if(evaluatedBool3==0){
         printf("Test 3 successful.\n");
     }
@@ -193,7 +202,6 @@ void (^runTests)(void) = ^(void) {
     strcpy(myParser->input,test4Input);
     parseNot(myParser,4);
     BOOL evaluatedBool4 = [nodeGeneric Eval:dict];
-
     if(evaluatedBool4==0){
         printf("Test 4 successful.\n");
     }
