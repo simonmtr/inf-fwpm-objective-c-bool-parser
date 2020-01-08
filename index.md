@@ -319,7 +319,7 @@ Objective C objects are mutable by default. The Foundation framework introduces 
   * NSMutableString
   * NSMutableAttributedString
   * NSMutableURLRequest
-
+The mutable counterpart to these classes have the same name without 'Mutable' in it, for example 'NSArray' or 'NSDictionary'.
 
 ### Recursion in Objective C
 It is possible to do recursion with Objective C.
@@ -327,7 +327,7 @@ It is possible to do recursion with Objective C.
 -(int)fib:(int)num{
 
     if (num == 0) {
-        return 0;aim
+        return 0;
     }
     if (num == 1) {
         return 1;
