@@ -320,6 +320,7 @@ Objective C objects are mutable by default. The Foundation framework introduces 
   * NSMutableString
   * NSMutableAttributedString
   * NSMutableURLRequest\
+  
 The mutable counterpart to these classes have the same name without 'Mutable' in it, for example 'NSArray' or 'NSDictionary'.
 
 ### Recursion in Objective C
