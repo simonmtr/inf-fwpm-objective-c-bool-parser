@@ -1,10 +1,10 @@
 #import <Foundation/Foundation.h>
 #include "node.m"
-#define MAXLENGTH (50)
+#define MAXINPUTLENGTH (50)
 
 //parser struct
 struct Parser {
-    char input[MAXLENGTH];
+    char input[MAXINPUTLENGTH];
     int currentIndex;
     NSMutableDictionary *variables;
     NodeGeneric *resultNode;
@@ -175,37 +175,28 @@ void (^runTests)(void) = ^(void) {
     strcpy(myParser->input,testInput);
     parseAnd(parseNot(myParser,4));
     BOOL evaluatedBool = [nodeGeneric Eval:dict];
-    if(evaluatedBool==0){
-        printf("Test 1 successful.\n");
-    }
 
     //test 2
     char *test2Input = "a|b";
     strcpy(myParser->input,test2Input);
     parseOr(parseAnd(parseNot(myParser,4)));
     BOOL evaluatedBool2 = [nodeGeneric Eval:dict];
-    if(evaluatedBool2==0){
-        printf("Test 2 successful.\n");
-    }
 
     //test 3
     char *test3Input = "!a|b";
     strcpy(myParser->input,test3Input);
     parseOr(parseAnd(parseNot(myParser,4)));
     BOOL evaluatedBool3 = [nodeGeneric Eval:dict];
-    if(evaluatedBool3==0){
-        printf("Test 3 successful.\n");
-    }
 
     //test 4
     char *test4Input = "!a";
     strcpy(myParser->input,test4Input);
     parseNot(myParser,4);
     BOOL evaluatedBool4 = [nodeGeneric Eval:dict];
-    if(evaluatedBool4==0){
-        printf("Test 4 successful.\n");
-    }
 
+    if(evaluatedBool==0 && evaluatedBool2==0 && evaluatedBool3==0 && evaluatedBool4==0){
+        printf("Tests successful.\n");
+    }
 };
 
 //MAIN
@@ -223,7 +214,7 @@ int main (int argc, const char * argv[])
     [dict setValue:[NSNumber numberWithInt:false] forKey:@"c"]; //add to dictionary
     
     //input
-    char inputToParse[MAXLENGTH] = {0}; // init to 0
+    char inputToParse[MAXINPUTLENGTH] = {0}; // init to 0
     printf("MAIN Input: ");
     scanf("%s", inputToParse); 
 
