@@ -319,7 +319,7 @@ Objective C objects are mutable by default. The Foundation framework introduces 
   * NSMutableData
   * NSMutableString
   * NSMutableAttributedString
-  * NSMutableURLRequest\
+  * NSMutableURLRequest
   
 The mutable counterpart to these classes have the same name without 'Mutable' in it, for example 'NSArray' or 'NSDictionary'.
 
@@ -355,22 +355,22 @@ Lazy Evaluation is generally not native to Go or Objective C, but can be impleme
 
 # Literature
 [1] Hudak, Paul, "Conception, evolution and application of functional programming languages", 1989 \
-[2] http://erlang.org/faq/introduction.html \
-[3] https://web.archive.org/web/20091017070140/http://cufp.galois.com/2009/abstracts.html#ChristopherPiroEugeneLetuchy \
-[4] https://wiki.haskell.org/Haskell_in_industry \
-[5] https://www.sitepoint.com/what-is-functional-programming/ \
-[6] https://medium.com/javascript-scene/master-the-javascript-interview-what-is-functional-programming-7f218c68b3a0 \
-[7] https://itnext.io/what-exactly-is-functional-programming-ea02c86753fd \
-[8] Watt, David A., "Programming Language Design Concepts", 2009\
-[9] http://www.ub.utwente.nl/webdocs/ctit/1/00000084.pdf\
-[10] https://www.geeksforgeeks.org/functional-programming-paradigm/ \
-[11] https://golang.org/ \
-[12] https://golang.org/doc/faq \
-[13] https://gobyexample.com/closures \
-[14] https://blog.merovius.de/2015/07/17/lazy-evaluation-in-go.html \
-[15] https://levelup.gitconnected.com/building-immutable-data-structures-in-go-56a1068c76b2? \
-[16] https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html \
-[17] https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/WorkingwithBlocks/WorkingwithBlocks.html \
-[18] https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/Blocks/Articles/00_Introduction.html \
-[19] https://intersections.tumblr.com/post/6740207101/lazy-evaluation-in-objective-c \
-[20] https://developer.apple.com/library/archive/documentation/General/Conceptual/CocoaEncyclopedia/ObjectMutability/ObjectMutability.html \
+[2] http://erlang.org/faq/introduction.html, called 05.01.2019 \
+[3] https://web.archive.org/web/20091017070140/http://cufp.galois.com/2009/abstracts.html#ChristopherPiroEugeneLetuchy, called 05.01.2019 \
+[4] https://wiki.haskell.org/Haskell_in_industry, called 05.01.2019 \
+[5] https://www.sitepoint.com/what-is-functional-programming/, called 05.01.2019 \
+[6] https://medium.com/javascript-scene/master-the-javascript-interview-what-is-functional-programming-7f218c68b3a0, called 05.01.2019 \
+[7] https://itnext.io/what-exactly-is-functional-programming-ea02c86753fd, called 05.01.2019 \
+[8] Watt, David A., "Programming Language Design Concepts", 2009 \
+[9] http://www.ub.utwente.nl/webdocs/ctit/1/00000084.pdf, called 05.01.2019\
+[10] https://www.geeksforgeeks.org/functional-programming-paradigm/, called 05.01.2019\
+[11] https://golang.org/, called 05.01.2019 \
+[12] https://golang.org/doc/faq, called 05.01.2019 \
+[13] https://gobyexample.com/closures, called 05.01.2019 \
+[14] https://blog.merovius.de/2015/07/17/lazy-evaluation-in-go.html, called 05.01.2019 \
+[15] https://levelup.gitconnected.com/building-immutable-data-structures-in-go-56a1068c76b2?, called 05.01.2019 \
+[16] https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html, called 05.01.2019 \
+[17] https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/WorkingwithBlocks/WorkingwithBlocks.html, called 05.01.2019 \
+[18] https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/Blocks/Articles/00_Introduction.html, called 05.01.2019 \
+[19] https://intersections.tumblr.com/post/6740207101/lazy-evaluation-in-objective-c, called 05.01.2019 \
+[20] https://developer.apple.com/library/archive/documentation/General/Conceptual/CocoaEncyclopedia/ObjectMutability/ObjectMutability.html, called 05.01.2019 \
