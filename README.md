@@ -1,5 +1,8 @@
 # objetive-c-bool-parser
 
+### Scope
+This project was created for the university course 'Concepts of Programming Languages'.
+
 ### Info
 This project generates an abstract syntax tree for parsing boolean expressions.
 ### Run:
