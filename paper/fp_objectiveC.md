@@ -10,7 +10,7 @@
 -> 2.1 [Closures](#closures-in-go)\
 -> 2.2 [Lazy Evaluation](#Lazy-evaluation-in-go)\
 -> 2.3 [Immutability](#Immutability-in-go)\
--> 2.4 [Recursion](#Recursion-in-go)\
+-> 2.4 [Recursion](#Recursion-in-go)
 3. [Objective C](#Objective-c)\
 -> 3.1 [Closures](#closures-in-objective-c)\
 -> 3.2 [Alternative to Blocks](#alternative-to-blocks)\
